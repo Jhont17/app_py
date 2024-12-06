@@ -13,7 +13,7 @@ def get_estudiantes():
 @estudiante_bp.route('/estudiantes', methods=['POST'])
 def create_estudiante():
     data = request.get_json()
-    nuevo_estudiante = Estudiante(nombre=data['nombre'], correo=data['correo'])
+    nuevo_estudiante = Estudiante(nombre=data['nombre'], correo=data['correo'], curso_id=data.get('curso_id'))
     db.session.add(nuevo_estudiante)
     db.session.commit()
     return jsonify(nuevo_estudiante.to_dict()), 201
@@ -24,7 +24,7 @@ def update_estudiante(id):
     data = request.get_json()
     estudiante.nombre = data['nombre']
     estudiante.correo = data['correo']
-    #estudiante.curso_id = data.get('curso_id')
+    estudiante.curso_id = data.get('curso_id')
     db.session.commit()
     return jsonify(estudiante.to_dict())
 
